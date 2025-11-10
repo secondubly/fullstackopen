@@ -29,7 +29,7 @@ sequenceDiagram
 
     browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
     activate browser
-    browser-->>server: text in note submission form
+    browser-->>server: {note: 'this is an example note'}
     deactivate browser
 
     Note right of browser: user types text into note form and hits submit
