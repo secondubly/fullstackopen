@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Display from './components/Display'
 
 const App = () => {
   const anecdotes = [
@@ -15,6 +16,7 @@ const App = () => {
   const voteCount = new Array(anecdotes.length).fill(0)
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(voteCount)
+  const [mostVotedQuote, setMostVotedQuote] = useState(0)
 
   const pickRandomQuote = () => {
     const quoteLength = anecdotes.length
@@ -27,11 +29,22 @@ const App = () => {
     const chosenQuote = selected
     const voteCopy = [...votes]
     voteCopy[chosenQuote] += 1
+
+    let mostVotedQuoteIndex = 0
+    let mostVotes = voteCopy[0]
+    for (let i = 0; i < voteCopy.length; i++) {
+      if (voteCopy[i] > mostVotes) {
+          mostVotedQuoteIndex = i
+          mostVotes = voteCopy[i]
+      }
+    }
+    setMostVotedQuote(mostVotedQuoteIndex)
     setVotes(voteCopy)
   }
 
   return (
     <div>
+      <Display text="Anecdote of the day" />
       {anecdotes[selected]}<br />
       has {votes[selected]} votes <br />
     <button onClick={pickRandomQuote}>
@@ -40,6 +53,9 @@ const App = () => {
     <button onClick={castVote}>
         vote
     </button>
+
+    <Display text="Ancedote with the most votes" />
+    <p>{anecdotes[mostVotedQuote]}</p>
     </div>
   )
 }
