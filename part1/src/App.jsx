@@ -12,7 +12,9 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
    
+  const voteCount = new Array(anecdotes.length).fill(0)
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(voteCount)
 
   const pickRandomQuote = () => {
     const quoteLength = anecdotes.length
@@ -21,11 +23,22 @@ const App = () => {
     setSelected(quoteNumber)
   }
 
+  const castVote = () => {
+    const chosenQuote = selected
+    const voteCopy = [...votes]
+    voteCopy[chosenQuote] += 1
+    setVotes(voteCopy)
+  }
+
   return (
     <div>
       {anecdotes[selected]}<br />
+      has {votes[selected]} votes <br />
     <button onClick={pickRandomQuote}>
         next anecdote
+    </button>
+    <button onClick={castVote}>
+        vote
     </button>
     </div>
   )
